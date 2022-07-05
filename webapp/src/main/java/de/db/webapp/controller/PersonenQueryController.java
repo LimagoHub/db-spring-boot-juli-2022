@@ -6,8 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,7 +14,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/personen")
-public class PersonenController {
+
+@RequestScope
+// @SessionScope bitte nicht
+public class PersonenQueryController {
+
 
 
 
@@ -56,30 +59,5 @@ public class PersonenController {
         return ResponseEntity.ok(person);
     }
 
-    @PutMapping(path="", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveOrUpdate( @Valid @RequestBody final PersonDto person) {
-        System.out.println(person);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-
-    }
-    @DeleteMapping(path="", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@RequestBody final PersonDto person)  {
-        return delete(person.getId());
-    }
-    @DeleteMapping(path="/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final String id)  {
-        // löschen
-        return ResponseEntity.notFound().build();
-    }
-
-    /*
-    @PostMapping(path="", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveOrUpdateNichtIdempotent(@RequestBody final PersonDto person,final UriComponentsBuilder builder) {
-        person.setId(UUID.randomUUID().toString());
-        final UriComponents uriComponents = builder.path("/personen/{id}").buildAndExpand(person.getId());
-
-        return ResponseEntity.created(uriComponents.toUri()).build();
-    }
-    */
 
 }

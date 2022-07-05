@@ -1,0 +1,13 @@
+@Component
+
+@Controller @Service @Repository
+
+@RestController stellt Objekte unter die Verwaltung von Spring
+---------------------------------------------
+@Scope (Singleton Eininstanzlich und von Spring verwaltet, Prototype nicht von Spring verwaltet)
+@Primary @Qualifier @Profile -> Typekonflikte aufzulösen
+@Autowired Referenzen
+@Value injeziert Strings oder einfache Typen wie z.B. int
+@(Get|Put|Post|Delete)Mapping 
+@RequestMapping virtuelle Ordner
+@ControllerAdvice Fehlerbehandlung für Controller (wird auch von Spring verwaltet)
