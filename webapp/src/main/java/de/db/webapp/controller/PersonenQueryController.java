@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/personen")
+@RequestMapping("/v1/personen")
 
 @RequestScope
 // @SessionScope bitte nicht

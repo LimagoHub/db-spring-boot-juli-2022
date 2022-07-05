@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/personen")
+@RequestMapping("/v1/personen")
 
 @RequestScope
 // @SessionScope bitte nicht
@@ -50,7 +50,7 @@ public class PersonenCommandController {
     @PostMapping(path="", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveOrUpdateNichtIdempotent(@RequestBody final PersonDto person,final UriComponentsBuilder builder) {
         person.setId(UUID.randomUUID().toString());
-        final UriComponents uriComponents = builder.path("/personen/{id}").buildAndExpand(person.getId());
+        final UriComponents uriComponents = builder.path("/v1/personen/{id}").buildAndExpand(person.getId());
 
         return ResponseEntity.created(uriComponents.toUri()).build();
     }
