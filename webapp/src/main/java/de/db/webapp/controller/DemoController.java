@@ -1,6 +1,7 @@
 package de.db.webapp.controller;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-    @GetMapping(path="/gruss")
+    @GetMapping(path="/gruss", produces = MediaType.TEXT_PLAIN_VALUE)
     public String gruss() {
         return "Hallo Demo";
     }
