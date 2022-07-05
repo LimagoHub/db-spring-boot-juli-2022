@@ -1,7 +1,11 @@
 package de.db.webapp.controller;
 
 import de.db.webapp.controller.dto.PersonDto;
+import de.db.webapp.controller.mapper.PersonDtoMapper;
+import de.db.webapp.services.PersonenService;
+import de.db.webapp.services.PersonenServiceException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,38 +21,28 @@ import java.util.UUID;
 
 @RequestScope
 // @SessionScope bitte nicht
+@AllArgsConstructor
 public class PersonenQueryController {
 
-
-
+    private final PersonenService service;
+    private final PersonDtoMapper mapper;
 
     @ApiResponse(responseCode = "200", description = "Person wurde gefunden")
     @ApiResponse(responseCode = "404", description = "Person wurde nicht gefunden")
     @ApiResponse(responseCode = "400", description = "Falsches Format")
     @ApiResponse(responseCode = "500", description = "interner Serverfehler")
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<PersonDto> getPersonById(@PathVariable  String id) {
-
-        if("1234".equals(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(PersonDto.builder().id(id).vorname("John").nachname("Doe").build());
+    public ResponseEntity<PersonDto> getPersonById(@PathVariable  String id) throws PersonenServiceException {
+        return ResponseEntity.of(service.findePersonNachID(id).map(mapper::convert));
     }
     @GetMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<PersonDto>> getPersonById(
+    public ResponseEntity<Iterable<PersonDto>> getPersonById(
             @RequestParam (required = false,defaultValue = "Fritz") String vorname,
-            @RequestParam (required = false,defaultValue = "Schmitt")String nachname) {
+            @RequestParam (required = false,defaultValue = "Schmitt")String nachname) throws PersonenServiceException {
 
-        System.out.println(vorname + " " + nachname);
-        List<PersonDto> liste = List.of(
-                PersonDto.builder().id(UUID.randomUUID().toString()).vorname("John").nachname("Doe").build(),
-                PersonDto.builder().id(UUID.randomUUID().toString()).vorname("John").nachname("Wayne").build(),
-                PersonDto.builder().id(UUID.randomUUID().toString()).vorname("John").nachname("Wick").build(),
-                PersonDto.builder().id(UUID.randomUUID().toString()).vorname("John").nachname("Rambo").build(),
-                PersonDto.builder().id(UUID.randomUUID().toString()).vorname("John").nachname("McClain").build());
 
-        return ResponseEntity.ok(liste);
+
+        return ResponseEntity.ok(mapper.convert(service.findeAlle() ));
     }
 
     // Ersatz-Get wegen parameterobjekt (safe und idempotent)
