@@ -51,5 +51,13 @@ public class SchweinCommandController {
         }
         return ResponseEntity.notFound().build();
     }
+    @DeleteMapping(path="", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> remove(@Valid@ RequestBody SchweinDto schweinDto) throws SchweineServiceException {
 
+
+        if(service.loeschen(schweinDto.getId())) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
