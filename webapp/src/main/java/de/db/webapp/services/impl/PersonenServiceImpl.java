@@ -6,12 +6,13 @@ import de.db.webapp.services.PersonenServiceException;
 import de.db.webapp.services.mapper.PersonMapper;
 import de.db.webapp.services.model.Person;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = PersonenServiceException.class)
 
 public class PersonenServiceImpl implements PersonenService {
 

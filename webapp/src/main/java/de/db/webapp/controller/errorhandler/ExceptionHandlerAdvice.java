@@ -1,7 +1,8 @@
-package de.db.webapp.controller;
+package de.db.webapp.controller.errorhandler;
 
 
 import de.db.webapp.services.PersonenServiceException;
+import de.db.webapp.services.SchweineServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,15 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(PersonenServiceException.class)
     public ResponseEntity<Object> handlePersonenServiceException( final PersonenServiceException ex, final WebRequest request){
+        final Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+        body.put("type", ex.getClass().getName());
+        logger.error(ex); // Wichtig
+        return ex.getMessage().equals("Ein Fehler ist aufgetreten")? ResponseEntity.internalServerError().body(body):ResponseEntity.badRequest().body(body);
+    }
+    @ExceptionHandler(SchweineServiceException.class)
+    public ResponseEntity<Object> handlePersonenServiceException( final SchweineServiceException ex, final WebRequest request){
         final Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());

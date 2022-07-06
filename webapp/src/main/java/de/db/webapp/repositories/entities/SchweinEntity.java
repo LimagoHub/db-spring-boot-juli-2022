@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="tbl_schweine")
-@NamedQuery(name = "SchweinEntity.findAllAsList", query = "select p from PersonEntity p")
+@NamedQuery(name = "SchweinEntity.findAllAsList", query = "select s from SchweinEntity s")
 public class SchweinEntity {
 
     @Id

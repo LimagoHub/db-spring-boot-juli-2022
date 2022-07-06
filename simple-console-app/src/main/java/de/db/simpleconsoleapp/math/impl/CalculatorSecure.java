@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @Primary
 @Slf4j
 public class CalculatorSecure implements Calculator{

@@ -4,7 +4,7 @@ import de.db.simpleconsoleapp.math.Calculator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @Qualifier("impl")
 public class CalculatorImpl implements Calculator {
     @Override

@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface SchweineService {
 
-    boolean speichern (Schwein schwein);
-    boolean loeschen(String id);
-    Optional<Schwein> findeNachId(String id);
-    Iterable<Schwein> findeAlle();
-    boolean fuettern(String id);
+    boolean speichern (Schwein schwein) throws SchweineServiceException;
+    boolean loeschen(String id) throws SchweineServiceException;
+    Optional<Schwein> findeNachId(String id) throws SchweineServiceException;
+    Iterable<Schwein> findeAlle() throws SchweineServiceException;
+    boolean fuettern(String id) throws SchweineServiceException;
 }
